@@ -7,10 +7,10 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
     public static MenuManager instance;
-    public GameObject MenuPage,ShopPage, SettingsPage,StorePage,LevelSelectionPage,PurchaseCoinsPage,NoCoinsPopup;
-    public GameObject[] PlayBalls;
-    public int[] BallsPrice;
-    public GameObject Prev_ArrowObj,Next_ArrowObj,LockObj,BuyButton,NextButtonInStore,SoundButton;
+    public GameObject MenuPage,ShopPage, SettingsPage,VehicleSelectionPage,LevelSelectionPage,NoCoinsPopup;
+    public GameObject[] Vehicles;
+    public int[] VehiclePrice;
+    public GameObject Prev_ArrowObj,Next_ArrowObj,LockObj,BuyButton,SoundButton;
     public Text TextPrice,TextTotalCoins;
     public GameObject[] Levels;
     public Sprite SoundOn, SoundOff;
@@ -31,13 +31,13 @@ public class MenuManager : MonoBehaviour
         //    Invoke("ShowPromo", 1f);
         //}
 
-        if (!PlayerPrefs.HasKey("CurrentBall"))
+        if (!PlayerPrefs.HasKey("CurrentVehicle"))
         {
-            PlayerPrefs.SetInt("CurrentBall", 0);
+            PlayerPrefs.SetInt("CurrentVehicle", 0);
         }
         if (!PlayerPrefs.HasKey("TotalCoins"))
         {
-            PlayerPrefs.SetInt("TotalCoins", 10);
+            PlayerPrefs.SetInt("TotalCoins", 100);
         }
         if (!PlayerPrefs.HasKey("PlayerLock"+0))
         {
@@ -54,19 +54,19 @@ public class MenuManager : MonoBehaviour
         CheckSound();
         PlayerPrefs.GetInt("UnlockedLevels");
         PlayerPrefs.SetInt("SelectedLevel",0);
-        PlayerPrefs.GetInt("CurrentBall");
+        PlayerPrefs.GetInt("CurrentVehicle");
         PlayerPrefs.GetInt("TotalCoins");
         if(PlayerPrefs.GetInt("PlayerLock" + 0)==1)
         {
-            BuyButton.SetActive(false);
-            NextButtonInStore.SetActive(true);
+            BuyButton.transform.GetChild(0).GetComponent<Text>().text = "Next";
             TextPrice.transform.parent.gameObject.SetActive(false);
             LockObj.SetActive(false);
+            Prev_ArrowObj.SetActive(false);
+            Next_ArrowObj.SetActive(true);
         }
         TextTotalCoins.text=""+ PlayerPrefs.GetInt("TotalCoins");
         CheckLevelLocks();
         UnlockAllStatus();
-        Debug.Log("NextTTTTTTT" + PlayerPrefs.GetInt("NextSelected"));
         if (PlayerPrefs.GetInt("NextSelected") == 1)
         {
             MenuPage.SetActive(false);
@@ -99,28 +99,28 @@ public class MenuManager : MonoBehaviour
     {
         ShopPage.SetActive(false);
         SettingsPage.SetActive(false);
-        StorePage.SetActive(false);
+        VehicleSelectionPage.SetActive(false);
         MenuPage.SetActive(true);
     }
     public void BackToStore()
     {
-        StorePage.SetActive(true);
+        VehicleSelectionPage.SetActive(true);
         LevelSelectionPage.SetActive(false);
     }
     public void OnClickMoreGames()
     {
-        Application.OpenURL("https://play.google.com/store/apps/dev?id=6997972662360750451&gl=US");
+        Application.OpenURL("https://play.google.com/store/apps/developer?id=KRYS+STUDIO&hl=en-IN");
     }
     public void PlayButtonAct()
     {
-        StorePage.SetActive(true);
+        VehicleSelectionPage.SetActive(true);
         MenuPage.SetActive(false);
     }
     public int p = 0;
     public void PrevArrow()
     {
         p--;
-        PlayBall(p); 
+        Vehicle(p); 
         if (p == 0)
         {
             Prev_ArrowObj.SetActive(false);
@@ -132,8 +132,8 @@ public class MenuManager : MonoBehaviour
     public void NextArrow()
     {
         p++;
-        PlayBall(p);
-        if (p == PlayBalls.Length-1)
+        Vehicle(p);
+        if (p == Vehicles.Length-1)
         {
             Next_ArrowObj.SetActive(false);
         }
@@ -143,52 +143,56 @@ public class MenuManager : MonoBehaviour
         }
 
     }
-    public void PlayBall(int Playerindex)
+    public void Vehicle(int vehicleIndex)
     {
-        for (int i = 0; i < PlayBalls.Length; i++)
+        for (int i = 0; i < Vehicles.Length; i++)
         {
-            if (i == Playerindex)
+            if (i == vehicleIndex)
             {
-                PlayBalls[i].SetActive(true);
-                TextPrice.text = "" + BallsPrice[i];
+                Vehicles[i].SetActive(true);
+                TextPrice.text = "" + VehiclePrice[i];
                 if (PlayerPrefs.GetInt("PlayerLock" + p) == 1)
                 {
                     LockObj.SetActive(false);
-                    BuyButton.SetActive(false);
-                    NextButtonInStore.SetActive(true);
+                    BuyButton.transform.GetChild(0).GetComponent<Text>().text = "Next";
                     TextPrice.transform.parent.gameObject.SetActive(false);
                 }
                 else
                 {
                     LockObj.SetActive(true);
-                    BuyButton.SetActive(true);
-                    NextButtonInStore.SetActive(false);
+                    BuyButton.transform.GetChild(0).GetComponent<Text>().text = "Buy";
                     TextPrice.transform.parent.gameObject.SetActive(true);
                 }
             }
             else
             {
-                PlayBalls[i].SetActive(false);
+                Vehicles[i].SetActive(false);
             }
         }
     }
 
-    public void BuyPlayer()
+    public void BuyOrNext()
     {
-        if(PlayerPrefs.GetInt("TotalCoins") >= BallsPrice[p])
+        if(PlayerPrefs.GetInt("PlayerLock" + p) == 1)
         {
-            UpdateCoins(BallsPrice[p], false);
-            PlayerPrefs.SetInt("PlayerLock" + p, 1);
-            BuyButton.SetActive(false);
-            TextPrice.transform.parent.gameObject.SetActive(false);
-            LockObj.SetActive(false);
-            NextButtonInStore.SetActive(true);
-        }else
-        {
-            Debug.Log("not enough Coins");
-            NoCoinsPopup.SetActive(true);
+            NextAct_VehicleSelection();
         }
-        
+        else
+        {
+            if (PlayerPrefs.GetInt("TotalCoins") >= VehiclePrice[p])
+            {
+                UpdateCoins(VehiclePrice[p], false);
+                PlayerPrefs.SetInt("PlayerLock" + p, 1);
+                TextPrice.transform.parent.gameObject.SetActive(false);
+                LockObj.SetActive(false);
+                BuyButton.transform.GetChild(0).GetComponent<Text>().text = "Next";
+            }
+            else
+            {
+                Debug.Log("not enough Coins");
+                NoCoinsPopup.SetActive(true);
+            }
+        }  
     }
     public void UpdateCoins(int amount,bool Add)
     {
@@ -204,12 +208,12 @@ public class MenuManager : MonoBehaviour
         PlayerPrefs.SetInt("TotalCoins", TempCoins);
         TextTotalCoins.text = "" + PlayerPrefs.GetInt("TotalCoins");
     }
-    public void NextAct_Store()
+    public void NextAct_VehicleSelection()
     {
-        PlayerPrefs.SetInt("CurrentBall",p);
+        PlayerPrefs.SetInt("CurrentVehicle",p);
         Debug.Log("SelectedPlayer Index :::"+p);
         LevelSelectionPage.SetActive(true);
-        StorePage.SetActive(false);
+        VehicleSelectionPage.SetActive(false);
         CheckLevelLocks();
     }
     public void Level(int LevelIndex)
@@ -271,16 +275,16 @@ public class MenuManager : MonoBehaviour
             soundIndex = 0;
         }
     }
-    public int AllLevelsValue, AllBallsValue;
-    public GameObject AllLevelBuyButton, AllBallsBuyButton;
-    public void UnlockAllBalls()
+    public int AllLevelsValue, AllVehiclesValue;
+    public GameObject AllLevelBuyButton, AllVehiclesBuyButton;
+    public void UnlockAllVehicles()
     {
         if (AllLevelsValue <= PlayerPrefs.GetInt("TotalCoins"))
         {
-            UpdateCoins(AllBallsValue, false);
-            PlayerPrefs.SetInt("UnlockAllBalls", 1);
+            UpdateCoins(AllVehiclesValue, false);
+            PlayerPrefs.SetInt("UnlockAllVehicles", 1);
             UnlockAllStatus();
-            for (int i=0;i<PlayBalls.Length;i++)
+            for (int i=0;i<Vehicles.Length;i++)
             {
                 PlayerPrefs.SetInt("PlayerLock" + i, 1);
             }
@@ -298,7 +302,7 @@ public class MenuManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("UnlockAllLevels", 1);
             UpdateCoins(AllLevelsValue, false);
-            PlayerPrefs.SetInt("UnlockedLevels",20);
+            PlayerPrefs.SetInt("UnlockedLevels",15);
             CheckLevelLocks();
             UnlockAllStatus();
         }
@@ -311,13 +315,13 @@ public class MenuManager : MonoBehaviour
     }
     void UnlockAllStatus()
     { 
-        if(PlayerPrefs.GetInt("UnlockAllBalls" )==1)
+        if(PlayerPrefs.GetInt("UnlockAllVehicles" )==1)
         {
-            AllBallsBuyButton.SetActive(false);
+            AllVehiclesBuyButton.SetActive(false);
         }
         else
         {
-            AllBallsBuyButton.SetActive(true);
+            AllVehiclesBuyButton.SetActive(true);
         }
 
         if(PlayerPrefs.GetInt("UnlockAllLevels") == 1)

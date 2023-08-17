@@ -11,12 +11,13 @@ public class GameManager : MonoBehaviour
     public GameObject Levels;
     public GameObject Players;
     public Transform PlayerPositions,CurrentSpawnPoint;
-    //public CinemachineVirtualCamera VirtualCamera;
-    //public MoveOnSwipe_EightDirections moveOn_EightDirection;
     public GameObject LevelCompletePage, LevelFailPage,PausePage,InstructionPopup;
     public int CoinsCollectedValue = 0, TempTotalCoins=0,SpawnChances;
-    public GameObject[] SpawnChance_Obj;
+    public GameObject[] SpawnChance_Obj,Stars_Obj;
     public AudioSource CoinSound;
+    public GameObject CurrentPlayer,RespawnButton;
+    public Text Text_LevelReward,Text_TotalEarned;
+    
     private void Awake()
     {
         instance = this;
@@ -24,8 +25,12 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale = 1;
         }
+        //PlayerPrefs.SetInt("CurrentVehicle", 2);
+        //PlayerPrefs.SetInt("SelectedLevel", 1);
+        PlayerPrefs.SetInt("SpawnChances", 3);
+
         PlayerPrefs.GetInt("SelectedLevel");
-        PlayerPrefs.GetInt("CurrentBall");
+        PlayerPrefs.GetInt("CurrentVehicle");
         PlayerPrefs.GetInt("TotalCoins");
     }
     void Start()
@@ -33,10 +38,10 @@ public class GameManager : MonoBehaviour
         EnableLevel();
         EnablePlayer();
         CheckSound();
-        if (!PlayerPrefs.HasKey("SpawnChances"))
-        {
-            PlayerPrefs.SetInt("SpawnChances", 3);
-        }
+        //if (!PlayerPrefs.HasKey("SpawnChances"))
+        //{
+        //    PlayerPrefs.SetInt("SpawnChances", 3);
+        //}
         if (!PlayerPrefs.HasKey("Instruction"))
         {
             PlayerPrefs.SetString("Instruction", "false");
@@ -45,7 +50,6 @@ public class GameManager : MonoBehaviour
         SpawnChances = PlayerPrefs.GetInt("SpawnChances");
         InstructionStatus();
         CheckSpawnChancesStatus();
-        Invoke("SetCamFollow", 1f);
     }
     void InstructionStatus()
     {
@@ -74,24 +78,16 @@ public class GameManager : MonoBehaviour
         }
         
     }
-    void SetCamFollow()
-    {
-        //VirtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_BindingMode =
-        //    CinemachineTransposer.BindingMode.SimpleFollowWithWorldUp;
-        
-    }
     void EnablePlayer()
     {
         for (int i = 0; i < Players.transform.childCount; i++)
         {
-            if (i == PlayerPrefs.GetInt("CurrentBall"))
+            if (i == PlayerPrefs.GetInt("CurrentVehicle"))
             {
+                CurrentPlayer = Players.transform.GetChild(i).gameObject;
                 Players.transform.GetChild(i).position = PlayerPositions.transform.GetChild(PlayerPrefs.GetInt("SelectedLevel") - 1).transform.position;
                 Players.transform.GetChild(i).rotation = PlayerPositions.transform.GetChild(PlayerPrefs.GetInt("SelectedLevel") - 1).transform.rotation;
-                //VirtualCamera.Follow = Players.transform.GetChild(i).gameObject.transform;
-                //VirtualCamera.LookAt = Players.transform.GetChild(i).gameObject.transform;
                 Players.transform.GetChild(i).gameObject.SetActive(true);
-                //moveOn_EightDirection.ballMovement = Players.transform.GetChild(i).GetComponent<BallMovement>();
             }
             else
             {
@@ -135,45 +131,44 @@ public class GameManager : MonoBehaviour
     }
     void CheckSpawnChancesStatus()
     {
-        if (PlayerPrefs.GetInt("SpawnChances") <= 3)
+        for (int i = 0; i < SpawnChance_Obj.Length; i++)
         {
-
-            for (int i = 0; i < SpawnChance_Obj.Length; i++)
+            if (i < PlayerPrefs.GetInt("SpawnChances"))
             {
-                if (i < PlayerPrefs.GetInt("SpawnChances"))
-                {
-                    SpawnChance_Obj[i].transform.GetChild(0).gameObject.SetActive(true);
-                }
-                else
-                {
-                    SpawnChance_Obj[i].transform.GetChild(0).gameObject.SetActive(false);
-                }
-
+                SpawnChance_Obj[i].transform.GetChild(0).gameObject.SetActive(true);
             }
+            else
+            {
+                SpawnChance_Obj[i].transform.GetChild(0).gameObject.SetActive(false);
+            }
+
+        }
+        if (PlayerPrefs.GetInt("SpawnChances") <= 3 && PlayerPrefs.GetInt("SpawnChances") > 0 && CurrentSpawnPoint != null)
+        {
+            RespawnButton.SetActive(true);
+        }
+        else if(PlayerPrefs.GetInt("SpawnChances") == 0 || CurrentSpawnPoint == null)
+        {
+            RespawnButton.SetActive(false);
         }
     }
     bool RespawnClicked;
     public void RespawnPlayer()
     {
-        if(PlayerPrefs.GetInt("SpawnChances")>0&&CurrentSpawnPoint!=null)
+        if(PlayerPrefs.GetInt("SpawnChances") > 0 && CurrentSpawnPoint != null)
         {
-            //VirtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_BindingMode =
-            //CinemachineTransposer.BindingMode.LockToTarget;
-
-            Invoke("SetCamFollow", 1f);
-            //UpdateSpawnChances(1, false);
-            Players.transform.GetChild(PlayerPrefs.GetInt("CurrentBall")).localPosition = new Vector3(CurrentSpawnPoint.position.x,CurrentSpawnPoint.position.y+0.45f, CurrentSpawnPoint.position.z);
-            Players.transform.GetChild(PlayerPrefs.GetInt("CurrentBall")).localRotation = CurrentSpawnPoint.localRotation;
-            Players.transform.GetChild(PlayerPrefs.GetInt("CurrentBall")).gameObject.SetActive(true);
-            Players.transform.GetChild(PlayerPrefs.GetInt("CurrentBall")).GetComponent<Rigidbody>().isKinematic = false;
+            CurrentPlayer.transform.localPosition = new Vector3(CurrentSpawnPoint.position.x,CurrentSpawnPoint.position.y+0.45f, CurrentSpawnPoint.position.z);
+            CurrentPlayer.transform.localRotation = CurrentSpawnPoint.localRotation;
+            CurrentPlayer.transform.gameObject.SetActive(true);
+            CurrentPlayer.transform.GetComponent<Rigidbody>().isKinematic = false;
             LevelFailPage.SetActive(false);
         }
         else if(PlayerPrefs.GetInt("SpawnChances") > 0 && CurrentSpawnPoint == null)
         {
-            Players.transform.GetChild(PlayerPrefs.GetInt("CurrentBall")).position = PlayerPositions.transform.GetChild(PlayerPrefs.GetInt("SelectedLevel") - 1).transform.position;
-            Players.transform.GetChild(PlayerPrefs.GetInt("CurrentBall")).localRotation = PlayerPositions.transform.GetChild(PlayerPrefs.GetInt("SelectedLevel") - 1).transform.localRotation;
-            Players.transform.GetChild(PlayerPrefs.GetInt("CurrentBall")).gameObject.SetActive(true);
-            Players.transform.GetChild(PlayerPrefs.GetInt("CurrentBall")).GetComponent<Rigidbody>().isKinematic = false;
+            CurrentPlayer.transform.position = PlayerPositions.transform.GetChild(PlayerPrefs.GetInt("SelectedLevel") - 1).transform.position;
+            CurrentPlayer.transform.localRotation = PlayerPositions.transform.GetChild(PlayerPrefs.GetInt("SelectedLevel") - 1).transform.localRotation;
+            CurrentPlayer.transform.gameObject.SetActive(true);
+            CurrentPlayer.transform.GetComponent<Rigidbody>().isKinematic = false;
             LevelFailPage.SetActive(false);
         }
         else
@@ -197,19 +192,46 @@ public class GameManager : MonoBehaviour
     }
     public void OnClickMoreGames()
     {
-        Application.OpenURL("https://play.google.com/store/apps/dev?id=6997972662360750451&gl=US");
+        Application.OpenURL("https://play.google.com/store/apps/developer?id=KRYS+STUDIO&hl=en-IN");
     }
     public void OnClicRateUs()
     {
         Application.OpenURL("https://play.google.com/store/apps/details?id=" + Application.identifier);
     }
+    void CheckStars()
+    {
+        for(int i=0;i< Stars_Obj.Length;i++)
+        {
+            if(i < SpawnChances)
+            {
+                Stars_Obj[i].transform.GetChild(0).gameObject.SetActive(true);
+            }
+            else
+            {
+                Stars_Obj[i].transform.GetChild(0).gameObject.SetActive(false);
+            }
+        }
+    }
     public void LevelFinish()
     {
+        CheckStars();
         LevelCompletePage.SetActive(true);
+        int LevelReward = 500;
+        int TotalEarned = LevelReward * SpawnChances;
+        UpdateCoins(TotalEarned, true);
+        Text_LevelReward.text = "Level Reward : 500";
+        Text_TotalEarned.text = "Total Earned : " + TotalEarned;
     }
     public void LevelFail()
     {
+        CheckSpawnChancesStatus();
         LevelFailPage.SetActive(true);
+        if(CurrentSpawnPoint != null)
+        {
+            UpdateSpawnChances(1, false);
+
+        }
+        CurrentPlayer.GetComponent<Rigidbody>().isKinematic = true;
     }
     public void Next()
     {
@@ -237,8 +259,5 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         PausePage.SetActive(false);
     }
-    public void RateUsButtonAct()
-    {
-        Debug.Log("Rate Us");
-    }
+    
 }

@@ -1,0 +1,140 @@
+fileFormatVersion: 2
+guid: 973e78222ab30a345b9d71796b6981cf
+timeCreated: 1459262283
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: bike_crb_body
+    100004: Bip001
+    100006: Bip001 HeadNub
+    100008: Bip001 L Finger0Nub
+    100010: Bip001 L Toe0Nub
+    100012: Bip001 R Finger0Nub
+    100014: Bip001 R Toe0Nub
+    100016: Plane001
+    100018: polySurface512
+    100020: polySurface513
+    100022: polySurface514
+    100024: Tyre
+    100026: Tyre1
+    100028: Object001
+    100030: Object002
+    100032: Object003
+    100034: Object004
+    400000: //RootNode
+    400002: bike_crb_body
+    400004: Bip001
+    400006: Bip001 HeadNub
+    400008: Bip001 L Finger0Nub
+    400010: Bip001 L Toe0Nub
+    400012: Bip001 R Finger0Nub
+    400014: Bip001 R Toe0Nub
+    400016: Plane001
+    400018: polySurface512
+    400020: polySurface513
+    400022: polySurface514
+    400024: Tyre
+    400026: Tyre1
+    400028: Object001
+    400030: Object002
+    400032: Object003
+    400034: Object004
+    2300000: bike_crb_body
+    2300002: Plane001
+    2300004: polySurface512
+    2300006: polySurface513
+    2300008: polySurface514
+    2300010: Tyre
+    2300012: Tyre1
+    2300014: Object001
+    2300016: Object002
+    2300018: Object003
+    2300020: Object004
+    3300000: bike_crb_body
+    3300002: Plane001
+    3300004: polySurface512
+    3300006: polySurface513
+    3300008: polySurface514
+    3300010: Tyre
+    3300012: Tyre1
+    3300014: Object001
+    3300016: Object002
+    3300018: Object003
+    3300020: Object004
+    4300000: bike_crb_body
+    4300002: Plane001
+    4300004: polySurface514
+    4300006: polySurface513
+    4300008: polySurface512
+    4300010: Tyre
+    4300012: Tyre1
+    4300014: Object001
+    4300016: Object002
+    4300018: Object003
+    4300020: Object004
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

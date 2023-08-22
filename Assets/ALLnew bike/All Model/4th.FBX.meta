@@ -1,0 +1,175 @@
+fileFormatVersion: 2
+guid: 20984c5af3dc6b64c8264b7186a0a744
+timeCreated: 1459257875
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Box011
+    100004: Box012
+    100006: Line030
+    100008: Line031
+    100010: Line033
+    100012: Object045
+    100014: Plane001
+    100016: Plane002
+    100018: Plane005
+    100020: Plane006
+    100022: Plane009
+    100024: polySurface512
+    100026: polySurface513
+    100028: polySurface514
+    100030: seat
+    100032: Tyre
+    100034: Tyre1
+    100036: Object046
+    100038: Object047
+    100040: Object048
+    400000: //RootNode
+    400002: Box011
+    400004: Box012
+    400006: Line030
+    400008: Line031
+    400010: Line033
+    400012: Object045
+    400014: Plane001
+    400016: Plane002
+    400018: Plane005
+    400020: Plane006
+    400022: Plane009
+    400024: polySurface512
+    400026: polySurface513
+    400028: polySurface514
+    400030: seat
+    400032: Tyre
+    400034: Tyre1
+    400036: Object046
+    400038: Object047
+    400040: Object048
+    2300000: Box011
+    2300002: Box012
+    2300004: Line030
+    2300006: Line031
+    2300008: Line033
+    2300010: Object045
+    2300012: Plane001
+    2300014: Plane002
+    2300016: Plane005
+    2300018: Plane006
+    2300020: Plane009
+    2300022: polySurface512
+    2300024: polySurface513
+    2300026: polySurface514
+    2300028: seat
+    2300030: Tyre
+    2300032: Tyre1
+    2300034: Object046
+    2300036: Object047
+    2300038: Object048
+    3300000: Box011
+    3300002: Box012
+    3300004: Line030
+    3300006: Line031
+    3300008: Line033
+    3300010: Object045
+    3300012: Plane001
+    3300014: Plane002
+    3300016: Plane005
+    3300018: Plane006
+    3300020: Plane009
+    3300022: polySurface512
+    3300024: polySurface513
+    3300026: polySurface514
+    3300028: seat
+    3300030: Tyre
+    3300032: Tyre1
+    3300034: Object046
+    3300036: Object047
+    3300038: Object048
+    4300000: Plane002
+    4300002: Line030
+    4300004: Line031
+    4300006: Plane005
+    4300008: Plane006
+    4300010: seat
+    4300012: Line033
+    4300014: Box011
+    4300016: Plane009
+    4300018: Box012
+    4300020: Object045
+    4300022: Plane001
+    4300024: polySurface514
+    4300026: polySurface513
+    4300028: polySurface512
+    4300030: Tyre
+    4300032: Tyre1
+    4300034: Object046
+    4300036: Object047
+    4300038: Object048
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

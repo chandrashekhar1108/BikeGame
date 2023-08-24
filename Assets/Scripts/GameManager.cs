@@ -9,15 +9,17 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public GameObject Levels;
-    public GameObject Players;
+    public GameObject[] Players;
     public Transform PlayerPositions,CurrentSpawnPoint;
     public GameObject LevelCompletePage, LevelFailPage,PausePage,InstructionPopup;
     public int CoinsCollectedValue = 0, TempTotalCoins=0,SpawnChances;
     public GameObject[] SpawnChance_Obj,Stars_Obj;
     public AudioSource CoinSound;
     public GameObject CurrentPlayer,RespawnButton;
-    public Text Text_LevelReward,Text_TotalEarned;
-    
+    public Text Text_LevelReward,Text_TotalEarned, Text_CollectedCoinIngame, Text_CoinsCollected;
+    public int CollectedCoins;
+
+
     private void Awake()
     {
         instance = this;
@@ -78,22 +80,28 @@ public class GameManager : MonoBehaviour
         }
         
     }
+    public void CoinCollectedIngame()
+    {
+        Text_CollectedCoinIngame.text = "Coins collected : " + CollectedCoins;
+    }
     void EnablePlayer()
     {
-        for (int i = 0; i < Players.transform.childCount; i++)
+        for (int i = 0; i < Players.Length; i++)
         {
             if (i == PlayerPrefs.GetInt("CurrentVehicle"))
             {
-                CurrentPlayer = Players.transform.GetChild(i).gameObject;
-                Players.transform.GetChild(i).position = PlayerPositions.transform.GetChild(PlayerPrefs.GetInt("SelectedLevel") - 1).transform.position;
-                Players.transform.GetChild(i).rotation = PlayerPositions.transform.GetChild(PlayerPrefs.GetInt("SelectedLevel") - 1).transform.rotation;
-                Players.transform.GetChild(i).gameObject.SetActive(true);
+                CurrentPlayer = Players[i].gameObject;
+                Players[i].transform.position = PlayerPositions.transform.GetChild(PlayerPrefs.GetInt("SelectedLevel") - 1).transform.position;
+                Players[i].transform.rotation = PlayerPositions.transform.GetChild(PlayerPrefs.GetInt("SelectedLevel") - 1).transform.rotation;
+                Players[i].transform.gameObject.SetActive(true);
+                Camera.main.GetComponent<BikeCamera>().target = CurrentPlayer.transform;
             }
             else
             {
-                Players.transform.GetChild(i).gameObject.SetActive(false);
+                Players[i].transform.gameObject.SetActive(false);
             }
         }
+        
     }
     void CheckSound()
     {
@@ -216,10 +224,11 @@ public class GameManager : MonoBehaviour
     {
         CheckStars();
         LevelCompletePage.SetActive(true);
-        int LevelReward = 500;
+        int LevelReward = 500 + CollectedCoins;
         int TotalEarned = LevelReward * SpawnChances;
         UpdateCoins(TotalEarned, true);
         Text_LevelReward.text = "Level Reward : 500";
+        Text_CoinsCollected.text = "Coins collected : " + CollectedCoins;
         Text_TotalEarned.text = "Total Earned : " + TotalEarned;
     }
     public void LevelFail()

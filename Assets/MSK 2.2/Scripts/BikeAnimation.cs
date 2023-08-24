@@ -68,7 +68,7 @@ public class BikeAnimation : MonoBehaviour
     }
 
 
-
+    public GameObject RootObj;
 
     void Update()
     {
@@ -91,32 +91,33 @@ public class BikeAnimation : MonoBehaviour
 
 
 
-        Debug.DrawRay(eventPoint.position, direction, Color.red);
+        //Debug.DrawRay(eventPoint.position, direction, Color.red);
 
 
-        RaycastHit hit;
+        //RaycastHit hit;
 
-        if (Physics.Raycast(eventPoint.position, direction, out hit, 1.0f) && BikeScript.speed > 50)
-        {
-            if (hit.collider.transform.root != transform.root)
-            {
-                if (player.parent != null)
-                {
-                    crashSound.GetComponent<AudioSource>().Play();
-                    player.parent = null;
-                }
-
-
-                DisableRagdoll(true);
-                player.GetComponent<Animator>().enabled = false;
-
-                BikeScript.crash = true;
-                timer = RestTime;
-            }
-        }
+        //if (Physics.Raycast(eventPoint.position, direction, out hit, 1.0f) && BikeScript.speed > 50)
+        //{
+        //    if (hit.collider.transform.root != transform.root)
+        //    {
+        //        RootObj = hit.collider.transform.root.gameObject;
+        //        if (player.parent != null)
+        //        {
+        //            crashSound.GetComponent<AudioSource>().Play();
+        //            player.parent = null;
+        //        }
 
 
+        //        DisableRagdoll(true);
+        //        player.GetComponent<Animator>().enabled = false;
 
+        //        BikeScript.crash = true;
+        //        timer = RestTime;
+        //    }
+        //}
+
+
+        
 
 
         if (timer == 0.0f)

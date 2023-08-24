@@ -26,7 +26,7 @@ public class Trackstweener : MonoBehaviour {
 			delayVal += 0.1f;
 		}
 		
-		delayVal = 0.8f;
+		delayVal = 0.25f;
 		foreach (GameObject gob in scalefrom_obj) {
 			iTween.ScaleFrom (gob, iTween.Hash ("Scale", Vector3.zero, "time", 0.5f, "delay", delayVal,"easetype",iTween.EaseType.easeOutBack));
 			delayVal += 0.1f;
@@ -34,7 +34,7 @@ public class Trackstweener : MonoBehaviour {
 
 
 
-		delayVal = 1.2f;
+		delayVal = 0.2f;
 		foreach (GameObject gob in fromDown_obj) {
 			print (gob.name+" :a: "+gob.transform.localPosition);	
 			if(gob!=null)

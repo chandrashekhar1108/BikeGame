@@ -12,14 +12,12 @@ public class GameManager : MonoBehaviour
     public GameObject[] Players;
     public Transform PlayerPositions,CurrentSpawnPoint;
     public GameObject LevelCompletePage, LevelFailPage,PausePage,InstructionPopup;
-    public int CoinsCollectedValue = 0, TempTotalCoins=0,SpawnChances;
+    public int TempTotalCoins = 0, SpawnChances, CollectedCoins = 0;
     public GameObject[] SpawnChance_Obj,Stars_Obj;
     public AudioSource CoinSound;
-    public GameObject CurrentPlayer,RespawnButton;
-    public Text Text_LevelReward,Text_TotalEarned, Text_CollectedCoinIngame, Text_CoinsCollected;
-    public int CollectedCoins;
-
-
+    public GameObject CurrentPlayer,RespawnButton,FadeEffect;
+    public Text Text_LevelReward,Text_TotalEarned,Text_CoinsCollected,Text_CollectedCoinIngame;
+    
     private void Awake()
     {
         instance = this;
@@ -80,10 +78,6 @@ public class GameManager : MonoBehaviour
         }
         
     }
-    public void CoinCollectedIngame()
-    {
-        Text_CollectedCoinIngame.text = "Coins collected : " + CollectedCoins;
-    }
     void EnablePlayer()
     {
         for (int i = 0; i < Players.Length; i++)
@@ -94,14 +88,12 @@ public class GameManager : MonoBehaviour
                 Players[i].transform.position = PlayerPositions.transform.GetChild(PlayerPrefs.GetInt("SelectedLevel") - 1).transform.position;
                 Players[i].transform.rotation = PlayerPositions.transform.GetChild(PlayerPrefs.GetInt("SelectedLevel") - 1).transform.rotation;
                 Players[i].transform.gameObject.SetActive(true);
-                Camera.main.GetComponent<BikeCamera>().target = CurrentPlayer.transform;
             }
             else
             {
                 Players[i].transform.gameObject.SetActive(false);
             }
         }
-        
     }
     void CheckSound()
     {
@@ -184,6 +176,19 @@ public class GameManager : MonoBehaviour
             // No chances
         }
     }
+    public void FixStruckVehicle()
+    {
+        if(CurrentSpawnPoint != null)
+        {
+            CurrentPlayer.transform.localPosition = new Vector3(CurrentSpawnPoint.position.x, CurrentSpawnPoint.position.y + 0.45f, CurrentSpawnPoint.position.z);
+            CurrentPlayer.transform.localRotation = CurrentSpawnPoint.localRotation;
+        }
+        else
+        {
+            CurrentPlayer.transform.position = PlayerPositions.transform.GetChild(PlayerPrefs.GetInt("SelectedLevel") - 1).transform.position;
+            CurrentPlayer.transform.localRotation = PlayerPositions.transform.GetChild(PlayerPrefs.GetInt("SelectedLevel") - 1).transform.localRotation;
+        }
+    }
     public void UpdateCoins(int amount, bool Add)
     {
         int TempCoins = PlayerPrefs.GetInt("TotalCoins");
@@ -196,7 +201,6 @@ public class GameManager : MonoBehaviour
             TempCoins -= amount;
         }
         PlayerPrefs.SetInt("TotalCoins", TempCoins);
-        //TextTotalCoins.text = "" + PlayerPrefs.GetInt("TotalCoins");
     }
     public void OnClickMoreGames()
     {
@@ -231,16 +235,33 @@ public class GameManager : MonoBehaviour
         Text_CoinsCollected.text = "Coins collected : " + CollectedCoins;
         Text_TotalEarned.text = "Total Earned : " + TotalEarned;
     }
+    public void CoinCollectedIngame()
+    {
+        Text_CollectedCoinIngame.text = "Coins collected : " + CollectedCoins;
+    }
     public void LevelFail()
     {
         CheckSpawnChancesStatus();
-        LevelFailPage.SetActive(true);
-        if(CurrentSpawnPoint != null)
+        UpdateSpawnChances(1, false);
+        if (SpawnChances > 0 && CurrentSpawnPoint != null || SpawnChances > 0 && CurrentSpawnPoint == null)
         {
-            UpdateSpawnChances(1, false);
-
+            FadeEffect.SetActive(true);
+            //RespawnPlayer();
+            Invoke("RespawnPlayer", 1f);
+        }
+        else
+        {
+            LevelFailPage.SetActive(true);
         }
         CurrentPlayer.GetComponent<Rigidbody>().isKinematic = true;
+    }
+    public void FillAllLives()
+    {
+        // if Ad successful
+        PlayerPrefs.SetInt("SpawnChances", 3);
+        LevelFailPage.SetActive(false);
+        CheckSpawnChancesStatus();
+        RespawnPlayer();
     }
     public void Next()
     {

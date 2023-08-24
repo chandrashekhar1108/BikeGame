@@ -69,9 +69,13 @@ public class MenuManager : MonoBehaviour
         UnlockAllStatus();
         if (PlayerPrefs.GetInt("NextSelected") == 1)
         {
-            MenuPage.SetActive(false);
+            //MenuPage.SetActive(false);
             LevelSelectionPage.SetActive(true);
             PlayerPrefs.SetInt("NextSelected", 0);
+        }
+        else
+        {
+            MenuPage.SetActive(true);
         }
     }
     void ShowPromo()

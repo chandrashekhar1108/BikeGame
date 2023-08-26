@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] SpawnChance_Obj,Stars_Obj;
     public AudioSource CoinSound;
     public GameObject CurrentPlayer,RespawnButton,FadeEffect;
-    public Text Text_LevelReward,Text_TotalEarned,Text_CoinsCollected,Text_CollectedCoinIngame;
+    public Text Text_LevelReward,Text_TotalEarned,Text_CoinsCollected,Text_CollectedCoinIngame,Text_TotalCoins;
     
     private void Awake()
     {
@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
         SpawnChances = PlayerPrefs.GetInt("SpawnChances");
         InstructionStatus();
         CheckSpawnChancesStatus();
+        Text_TotalCoins.text=""+ PlayerPrefs.GetInt("TotalCoins"); ;
     }
     void InstructionStatus()
     {
@@ -228,16 +229,16 @@ public class GameManager : MonoBehaviour
     {
         CheckStars();
         LevelCompletePage.SetActive(true);
-        int LevelReward = 500 + CollectedCoins;
-        int TotalEarned = LevelReward * SpawnChances;
-        UpdateCoins(TotalEarned, true);
-        Text_LevelReward.text = "Level Reward : 500";
+        int LevelReward = 1000 + CollectedCoins;
+        //int TotalEarned = LevelReward * SpawnChances;
+        UpdateCoins(LevelReward, true);
+        Text_LevelReward.text = "Level Reward : 1000";
         Text_CoinsCollected.text = "Coins collected : " + CollectedCoins;
-        Text_TotalEarned.text = "Total Earned : " + TotalEarned;
+        Text_TotalEarned.text = "Total Earned : " + LevelReward;
     }
     public void CoinCollectedIngame()
     {
-        Text_CollectedCoinIngame.text = "Coins collected : " + CollectedCoins;
+        Text_CollectedCoinIngame.text = "" + CollectedCoins;
     }
     public void LevelFail()
     {

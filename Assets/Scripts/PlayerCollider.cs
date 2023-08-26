@@ -19,7 +19,7 @@ public class PlayerCollider : MonoBehaviour
         if(other.tag=="Coin")
         {
             other.gameObject.SetActive(false);
-            GameManager.instance.CollectedCoins += 1;
+            GameManager.instance.CollectedCoins += 100;
             GameManager.instance.CoinCollectedIngame();
             GameManager.instance.CoinSound.Play();
         }

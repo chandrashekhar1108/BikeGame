@@ -26,11 +26,6 @@ public class MenuManager : MonoBehaviour
     }
     void Start()
     {
-        //if (PlayerPrefs.GetInt("Begin") == 1)
-        //{
-        //    Invoke("ShowPromo", 1f);
-        //}
-
         if (!PlayerPrefs.HasKey("CurrentVehicle"))
         {
             PlayerPrefs.SetInt("CurrentVehicle", 0);
@@ -69,7 +64,6 @@ public class MenuManager : MonoBehaviour
         UnlockAllStatus();
         if (PlayerPrefs.GetInt("NextSelected") == 1)
         {
-            //MenuPage.SetActive(false);
             LevelSelectionPage.SetActive(true);
             PlayerPrefs.SetInt("NextSelected", 0);
         }
@@ -78,12 +72,6 @@ public class MenuManager : MonoBehaviour
             MenuPage.SetActive(true);
         }
     }
-    void ShowPromo()
-    {
-        //CrossPromo.Instance.ForceShowPopup();
-        PlayerPrefs.SetInt("Begin", 0);
-    }
-
 
     private void OnApplicationQuit()
     {
@@ -193,7 +181,7 @@ public class MenuManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("not enough Coins");
+                //Debug.Log("not enough Coins");
                 NoCoinsPopup.SetActive(true);
             }
         }  
@@ -295,7 +283,6 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            //PurchaseCoinsPage.SetActive(true);
             NoCoinsPopup.SetActive(true);
         }
     }
@@ -312,7 +299,6 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            //PurchaseCoinsPage.SetActive(true);
             NoCoinsPopup.SetActive(true);
         }
         
@@ -355,7 +341,6 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            //PurchaseCoinsPage.SetActive(true);
             NoCoinsPopup.SetActive(true);
         }
     }

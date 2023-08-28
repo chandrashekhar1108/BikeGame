@@ -146,11 +146,11 @@ public class GameManager : MonoBehaviour
         }
         if (PlayerPrefs.GetInt("SpawnChances") <= 3 && PlayerPrefs.GetInt("SpawnChances") > 0 && CurrentSpawnPoint != null)
         {
-            RespawnButton.SetActive(true);
+            //RespawnButton.SetActive(true);
         }
         else if(PlayerPrefs.GetInt("SpawnChances") == 0 || CurrentSpawnPoint == null)
         {
-            RespawnButton.SetActive(false);
+            //RespawnButton.SetActive(false);
         }
     }
     bool RespawnClicked;
@@ -247,7 +247,6 @@ public class GameManager : MonoBehaviour
         if (SpawnChances > 0 && CurrentSpawnPoint != null || SpawnChances > 0 && CurrentSpawnPoint == null)
         {
             FadeEffect.SetActive(true);
-            //RespawnPlayer();
             Invoke("RespawnPlayer", 1f);
         }
         else

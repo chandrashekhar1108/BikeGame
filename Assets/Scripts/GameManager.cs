@@ -32,11 +32,12 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.GetInt("SelectedLevel");
         PlayerPrefs.GetInt("CurrentVehicle");
         PlayerPrefs.GetInt("TotalCoins");
+        EnablePlayer();
     }
     void Start()
     {
         EnableLevel();
-        EnablePlayer();
+        //EnablePlayer();
         CheckSound();
         //if (!PlayerPrefs.HasKey("SpawnChances"))
         //{
@@ -89,6 +90,7 @@ public class GameManager : MonoBehaviour
                 Players[i].transform.position = PlayerPositions.transform.GetChild(PlayerPrefs.GetInt("SelectedLevel") - 1).transform.position;
                 Players[i].transform.rotation = PlayerPositions.transform.GetChild(PlayerPrefs.GetInt("SelectedLevel") - 1).transform.rotation;
                 Players[i].transform.gameObject.SetActive(true);
+                Camera.main.GetComponent<BikeCamera>().target = Players[i].transform;
             }
             else
             {

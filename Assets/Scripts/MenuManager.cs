@@ -32,7 +32,7 @@ public class MenuManager : MonoBehaviour
         }
         if (!PlayerPrefs.HasKey("TotalCoins"))
         {
-            PlayerPrefs.SetInt("TotalCoins", 10000000);
+            PlayerPrefs.SetInt("TotalCoins", 0);
         }
         if (!PlayerPrefs.HasKey("PlayerLock"+0))
         {

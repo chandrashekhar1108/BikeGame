@@ -32,7 +32,7 @@ public class MenuManager : MonoBehaviour
         }
         if (!PlayerPrefs.HasKey("TotalCoins"))
         {
-            PlayerPrefs.SetInt("TotalCoins", 0);
+            PlayerPrefs.SetInt("TotalCoins", 10000000);
         }
         if (!PlayerPrefs.HasKey("PlayerLock"+0))
         {
@@ -293,7 +293,7 @@ public class MenuManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("UnlockAllLevels", 1);
             UpdateCoins(AllLevelsValue, false);
-            PlayerPrefs.SetInt("UnlockedLevels",15);
+            PlayerPrefs.SetInt("UnlockedLevels",20);
             CheckLevelLocks();
             UnlockAllStatus();
         }

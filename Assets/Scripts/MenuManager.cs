@@ -344,4 +344,8 @@ public class MenuManager : MonoBehaviour
             NoCoinsPopup.SetActive(true);
         }
     }
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }
